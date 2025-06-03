@@ -22,5 +22,11 @@ except ModuleNotFoundError:
 __version__ = "1.1.2"
 
 # Read URL of the Real Python feed from config file
-_cfg = tomllib.loads(resources.read_text("reader", "config.toml"))
+try:
+    from importlib.resources import files
+except ImportError:
+    _cfg = tomllib.loads(resources.read_text("reader", "config.toml"))
+else:
+    _cfg = tomllib.loads((files("reader") / "config.toml").read_text())
+
 URL = _cfg["feed"]["url"]
