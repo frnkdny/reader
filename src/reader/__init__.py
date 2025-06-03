@@ -23,8 +23,10 @@ __version__ = "1.1.2"
 
 # Read URL of the Real Python feed from config file
 try:
+    # Available in Python 3.9+
     from importlib.resources import files
 except ImportError:
+    # resources.read_text() Deprecated in Python 3.11+
     _cfg = tomllib.loads(resources.read_text("reader", "config.toml"))
 else:
     _cfg = tomllib.loads((files("reader") / "config.toml").read_text())
